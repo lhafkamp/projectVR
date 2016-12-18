@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>360&deg; Image Gallery</title>
     <meta name="description" content="360&deg; Image Gallery - A-Frame">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/2.3.0/nunjucks.min.js"></script>
     <script src="https://rawgit.com/aframevr/aframe/917c06889ee1f3f79b7b1bbd9eab9815f9512503/dist/aframe.min.js"></script>
     <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
@@ -15,13 +16,10 @@
   <body>
     <a-scene>
       <a-assets>
-        <img id="city" crossorigin="anonymous" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
-        <img id="city-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg">
-        <img id="cubes-thumb" data-cube="cube" crossorigin="anonymous" src="https://postimg.org/image/p6al6ceen/">
-        <img id="sechelt-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg">
-        <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="cubes" crossorigin="anonymous" src="https://farm4.staticflickr.com/3067/2813928349_ac060f9e85_o.jpg">
-        <img id="sechelt" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
+        <img id="inside" crossorigin="anonymous" src="../assets/img/inside.png">
+        <img id="outside-thumb" data-cube="cube" crossorigin="anonymous" src="../assets/img/ui.png">
+        <img id="outside" crossorigin="anonymous" src="../assets/img/outside.png">
+        <audio id="click-sound" crossorigin="anonymous" src="../assets/sound/click.ogg"></audio>
 
         <!-- Image link template to be reused. -->
         <script id="link" type="text/nunjucks">
@@ -38,11 +36,11 @@
       </a-assets>
 
       <!-- 360-degree image. -->
-      <a-sky id="image-360" radius="10" src="#city"></a-sky>
+      <a-sky id="image-360" radius="10" src="#inside"></a-sky>
 
       <!-- Image links. -->
       <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
-        <a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#outside" data-thumb="#outside-thumb"></a-entity>
       </a-entity>
 
       <!-- Camera + cursor. -->
@@ -55,10 +53,5 @@
           raycaster="objects: .link"></a-cursor>
       </a-entity>
     </a-scene>
-
-    <script>
-    const cube = document.querySelector('[data-cube]');
-    console.log(cube);
-    </script>
   </body>
 </html>
