@@ -16,13 +16,10 @@
   <body>
     <a-scene>
       <a-assets>
-        <img id="city" crossorigin="anonymous" src="../assets/img/inside.png">
-        <img id="city-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg">
-        <img id="cubes-thumb" data-cube="cube" crossorigin="anonymous" src="https://postimg.org/image/p6al6ceen/">
-        <img id="sechelt-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg">
+        <img id="inside" crossorigin="anonymous" src="../assets/img/inside.png">
+        <img id="outside-thumb" data-cube="cube" crossorigin="anonymous" src="../assets/img/ui.png">
         <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="cubes" crossorigin="anonymous" src="https://farm4.staticflickr.com/3067/2813928349_ac060f9e85_o.jpg">
-        <img id="sechelt" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
+        <img id="outside" crossorigin="anonymous" src="../assets/img/outside.png">
 
         <!-- Image link template to be reused. -->
         <script id="link" type="text/nunjucks">
@@ -39,11 +36,11 @@
       </a-assets>
 
       <!-- 360-degree image. -->
-      <a-sky id="image-360" radius="10" src="#city"></a-sky>
+      <a-sky id="image-360" radius="10" src="#inside"></a-sky>
 
       <!-- Image links. -->
       <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
-        <a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#outside" data-thumb="#outside-thumb"></a-entity>
       </a-entity>
 
       <!-- Camera + cursor. -->
