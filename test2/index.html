@@ -20,6 +20,8 @@
         <img id="outside-thumb" data-cube="cube" crossorigin="anonymous" src="../assets/img/uitest2.png">
         <img id="outside" crossorigin="anonymous" src="../assets/img/outside.png">
         <audio id="click-sound" crossorigin="anonymous" src="../assets/sound/click.ogg"></audio>
+        <video id="video" src="../assets/video/pidgeon_veryfast720p30.mp4"
+               loop crossorigin preload="auto"></video>
 
         <!-- Image link template to be reused. -->
         <script id="link" type="text/nunjucks">
@@ -36,11 +38,11 @@
       </a-assets>
 
       <!-- 360-degree image. -->
-      <a-sky id="image-360" radius="10" src="#inside"></a-sky>
+      <a-videosphere id="image-360" radius="10" src="#inside"></a-videosphere>
 
       <!-- Image links. -->
       <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
-        <a-entity template="src: #link" data-src="#outside" data-thumb="#outside-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#video" data-thumb="#outside-thumb"></a-entity>
       </a-entity>
 
       <!-- Camera + cursor. -->
