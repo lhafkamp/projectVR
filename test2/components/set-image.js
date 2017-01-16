@@ -24,7 +24,10 @@ AFRAME.registerComponent('set-image', {
       // Wait for fade to complete.
       setTimeout(function () {
         // Set image.
+        console.log(data, el);
         data.target.setAttribute('material', 'src', data.src);
+        data.src = '#inside'
+        el.setAttribute('material', 'src', '#back')
       }, data.dur);
     });
   },
