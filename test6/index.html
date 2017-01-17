@@ -45,6 +45,7 @@ canvas {
 
   recognition.addEventListener('result', e => {
     console.log(e.results);
+    // recognition.start();
     const transcript = Array.from(e.results)
       .map(result => result[0])
       .map(result => result.transcript)
@@ -63,7 +64,7 @@ canvas {
     }, 2000);
 
     setTimeout(() => {
-      sky.setAttribute('src', 'img/duif.mp4');
+      sky.setAttribute('src', '../assets/video/duif.mp4');
       ui.removeChild(document.querySelector('[data-ui]'));
     }, 1000);
   }
