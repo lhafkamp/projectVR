@@ -15,12 +15,12 @@ canvas {
 <body>
 <a-scene data-scene="binnen">
   <a-curvedimage data-ui="test" src="../assets/img/ui.png" radius="4" theta-length="360" height="12" scale=".3 .3 .3"></a-curvedimage>
-  <a-sky data-test="sky" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
+  <a-videosphere data-test="sky" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
     <a-root>
       <a-entity geometry="primitive: sphere" material="shader: flat; src: url(https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg);" scale="1 1 1">
       </a-entity>
     </a-root>
-  </a-sky>
+  </a-videosphere>
   <a-entity camera look-controls>
         <a-cursor id="cursor"
           animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
@@ -62,7 +62,7 @@ canvas {
     }, 2000);
 
     setTimeout(() => {
-      sky.setAttribute('src', '../assets/img/outside.png');
+      sky.setAttribute('src', 'img/duif.mp4');
       ui.removeChild(document.querySelector('[data-ui]'));
     }, 1000);
   }
