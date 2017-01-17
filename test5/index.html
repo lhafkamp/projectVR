@@ -5,6 +5,7 @@
 <title>demo.sketch</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+<script src="components/speech.js"></script>
 <style>
 canvas {
   transition: opacity .2s;
@@ -32,5 +33,43 @@ canvas {
 
 <img src="../assets/img/outside.png" style="display:none" />
 
+<script type="text/javascript">
+  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const sky = document.querySelector('[data-test]');
+  const ui = document.querySelector('[data-scene]');
+  const recognition = new SpeechRecognition();
+
+  recognition.interimResults = true;
+
+  recognition.addEventListener('result', e => {
+    console.log(e.results);
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('');
+
+      if (transcript.includes('level 3')) {
+        goToLevel();
+      }
+      console.log(transcript);
+  });
+
+  function goToLevel() {
+    document.querySelector('canvas').style.opacity = 0;
+    setTimeout(() => {
+      document.querySelector('canvas').style.opacity = 1;
+    }, 2000);
+
+    setTimeout(() => {
+      sky.setAttribute('src', '../assets/img/outside.png');
+      ui.removeChild(document.querySelector('[data-ui]'));
+    }, 1000);
+  }
+
+  recognition.addEventListener('end', recognition.start);
+  recognition.start();
+
+</script>
 </body>
 </html>
