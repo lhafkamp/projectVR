@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>demo.sketch</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
-<style>
-canvas {
-  transition: opacity .2s;
-}
-</style>
+  <meta charset="utf-8">
+  <title>VR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+  <script src="../assets/js/aframe-lazyload.js"></script>
+
+  <style type="text/css">
+    canvas { transition: opacity .2s; background: #000; }
+  </style>
 </head>
+
 <body>
-<!-- <audio autoplay src="../assets/sound/vrvoice.mp3"></audio> -->
-<a-scene data-scene="binnen">
-  <a-assets>
-    <video id="video" src="../assets/video/duif.mp4"
-           autoplay muted loop crossorigin preload="auto"></video>
-  </a-assets>
-  <a-curvedimage data-ui="test" src="../assets/img/ui.png" radius="4" theta-length="360" height="12" scale=".3 .3 .3"></a-curvedimage>
-  <a-videosphere data-test="sky" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
-    <a-root>
-      <a-entity geometry="primitive: sphere" material="shader: flat; src: url(https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg);" scale="1 1 1">
-      </a-entity>
-    </a-root>
-  </a-videosphere>
-  <a-entity camera look-controls>
-        <a-cursor id="cursor"
-          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
-          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
-          event-set__1="_event: mouseenter; color: springgreen"
-          event-set__2="_event: mouseleave; color: white"
-          raycaster="objects: .link"></a-cursor>
-      </a-entity>
-</a-scene>
+  <!-- <audio autoplay src="../assets/sound/vrvoice.mp3"></audio> -->
+  <a-scene data-scene="binnen">
+    <a-assets> -->
+      <video id="video1" src="../assets/video/school.mp4"  lazy-load="chunk: 0; src:../assets/video/school.mp4; id: video1" autoplay muted loop crossorigin></video>
+      <video id="video2" src="../assets/video/metro.mp4"   lazy-load="chunk: 1; src:../assets/video/school.mp4; id: video2" autoplay muted loop crossorigin></video>
+      <video id="video3" src="../assets/video/cs.mp4"      lazy-load="chunk: 1; src:../assets/video/school.mp4; id: video3" autoplay muted loop crossorigin></video>
+      <video id="video4" src="../assets/video/csplein.mp4" lazy-load="chunk: 2; src:../assets/video/school.mp4; id: video4" autoplay muted loop crossorigin></video>
+      <video id="video5" src="../assets/video/duif.mp4"    lazy-load="chunk: 2; src:../assets/video/school.mp4; id: video5" autoplay muted loop crossorigin></video>
+    </a-assets>
 
-<img src="../assets/img/outside.png" style="display:none" />
+    <a-curvedimage data-ui="test" src="../assets/img/besteui.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".3 .3 .3"></a-curvedimage>
 
-<script type="text/javascript">
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    <a-videosphere data-element="videosphere" src="../assets/img/room.png">
+      <a-root>
+        <a-entity geometry="primitive: sphere" material="shader: flat; src: url(../assets/img/room.png);" scale="1 1 1"></a-entity>
+      </a-root>
+    </a-videosphere>
 
-  const sky = document.querySelector('[data-test]');
-  const ui = document.querySelector('[data-scene]');
-  const vid = document.querySelector('#video');
-  const recognition = new SpeechRecognition();
+    <a-entity camera look-controls>
+      <a-cursor id="cursor"
+        animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+        animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+        event-set__1="_event: mouseenter; color: springgreen"
+        event-set__2="_event: mouseleave; color: white"
+        raycaster="objects: .link"></a-cursor>
+    </a-entity>
+  </a-scene>
 
-  recognition.interimResults = true;
+  <script type="text/javascript">
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  recognition.addEventListener('result', e => {
-    console.log(e.results);
-    // recognition.start();
-    const transcript = Array.from(e.results)
-      .map(result => result[0])
-      .map(result => result.transcript)
-      .join('');
+    const skyElem = document.querySelector('[data-element="videosphere"]');
 
-      if (transcript.includes('level 3')) {
-        goToLevel();
-      }
-      console.log(transcript);
-  });
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
 
-  function goToLevel() {
-    document.querySelector('canvas').style.opacity = 0;
-    setTimeout(() => {
-      document.querySelector('canvas').style.opacity = 1;
-    }, 2000);
+    recognition.addEventListener('result', e => {
+      // console.log(e.results);
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
 
-    setTimeout(() => {
-      sky.setAttribute('src', '#video');
-      vid.play();
-      ui.removeChild(document.querySelector('[data-ui]'));
-    }, 1000);
-  }
+        if (transcript.includes('level 3')) {
+          goToLevel(3);
+        }
 
-  recognition.addEventListener('end', recognition.start);
-  recognition.start();
+        console.log(transcript);
+    });
 
-</script>
+    function goToLevel(level) {
+      const canvasElem = document.querySelector('canvas');
+
+      canvasElem.style.opacity = 0;
+      setTimeout(() => {
+        canvasElem.style.opacity = 1;
+      }, 2000);
+
+      setTimeout(() => {
+        skyElem.setAttribute('src', `#video${level}`);
+
+        const currentVideo = document.querySelector(`#video${level}`);
+        currentVideo.play();
+        currentVideo.currentTime = 0;
+      }, 1000);
+    }
+
+    recognition.addEventListener('end', recognition.start);
+    recognition.start();
+  </script>
 </body>
 </html>
