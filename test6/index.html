@@ -15,10 +15,11 @@ canvas {
 <!-- <audio autoplay src="../assets/sound/vrvoice.mp3"></audio> -->
 <a-scene data-scene="binnen">
   <a-assets>
-    <video id="video" src="../assets/video/duif.mp4"
+    <video id="video" src="../assets/video/school.mp4"
            autoplay muted loop crossorigin preload="auto"></video>
   </a-assets>
-  <a-curvedimage data-ui="test" src="../assets/img/ui.png" radius="4" theta-length="360" height="12" scale=".3 .3 .3"></a-curvedimage>
+
+  <a-curvedimage data-ui="test" src="../assets/img/besteui.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".3 .3 .3"></a-curvedimage>
   <a-videosphere data-test="sky" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
     <a-root>
       <a-entity geometry="primitive: sphere" material="shader: flat; src: url(https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg);" scale="1 1 1">
@@ -43,6 +44,7 @@ canvas {
   const sky = document.querySelector('[data-test]');
   const ui = document.querySelector('[data-scene]');
   const vid = document.querySelector('#video');
+  const besteui = document.querySelector('[data-ui]');
   const recognition = new SpeechRecognition();
 
   recognition.interimResults = true;
@@ -55,8 +57,20 @@ canvas {
       .map(result => result.transcript)
       .join('');
 
-      if (transcript.includes('level 3')) {
+      if (transcript.includes('level 1')) {
         goToLevel();
+        setTimeout(() => {
+          sky.setAttribute('src', '#video');
+          vid.play();
+          besteui.setAttribute('opacity', '0');
+        }, 1000);
+      } else if (transcript.includes('stop')) {
+        goToLevel();
+        setTimeout(() => {
+          sky.setAttribute('src', 'https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg');
+          vid.pause();
+          besteui.setAttribute('opacity', '1');
+        }, 1000);
       }
       console.log(transcript);
   });
@@ -66,12 +80,6 @@ canvas {
     setTimeout(() => {
       document.querySelector('canvas').style.opacity = 1;
     }, 2000);
-
-    setTimeout(() => {
-      sky.setAttribute('src', '#video');
-      vid.play();
-      ui.removeChild(document.querySelector('[data-ui]'));
-    }, 1000);
   }
 
   recognition.addEventListener('end', recognition.start);
