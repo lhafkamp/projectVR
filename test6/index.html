@@ -48,7 +48,8 @@
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const skyElem = document.querySelector('[data-element="videosphere"]');
-    const UIElem = document.querySelector('[data-ui="curvedimage"]');
+    const UIElem = document.querySelector('[data-ui]');
+    // const UIElem = document.querySelector('[data-ui="curvedimage"]');
     const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
     const recognition = new SpeechRecognition();
@@ -99,6 +100,7 @@
           if(level === 0) {
             skyElem.setAttribute('src', '../assets/img/besteui.png');
             vid.pause();
+            UIElem.setAttribute('opacity', '1');
           } else {
             skyElem.setAttribute('src', `#video${level}`);
 
@@ -106,8 +108,6 @@
             currentVideo.play();
             currentVideo.currentTime = 0;
           }
-
-          UIElem.setAttribute('opacity', '1');
         }, 1000);
       }
     }
