@@ -62,22 +62,22 @@
         .map(result => result.transcript)
         .join('');
 
-        if (transcript.includes('level 1')) {
+        if(transcript.includes('level 1')) {
           goToLevel(1);
         }
-        else if (transcript.includes('level 2')) {
+        else if(transcript.includes('level 2')) {
           goToLevel(2);
         }
-        else if (transcript.includes('level 3')) {
+        else if(transcript.includes('level 3')) {
           goToLevel(3);
         }
-        else if (transcript.includes('level 4')) {
+        else if(transcript.includes('level 4')) {
           goToLevel(4);
         }
-        else if (transcript.includes('level 5')) {
+        else if(transcript.includes('level 5')) {
           goToLevel(5);
         }
-        else if (transcript.includes('stop')) {
+        else if(transcript.includes('stop')) {
           goToLevel(0);
         }
 
