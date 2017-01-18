@@ -42,6 +42,7 @@ canvas {
 
   const sky = document.querySelector('[data-test]');
   const ui = document.querySelector('[data-scene]');
+  const vid = document.querySelector('#video');
   const recognition = new SpeechRecognition();
 
   recognition.interimResults = true;
@@ -68,6 +69,7 @@ canvas {
 
     setTimeout(() => {
       sky.setAttribute('src', '#video');
+      vid.play();
       ui.removeChild(document.querySelector('[data-ui]'));
     }, 1000);
   }
