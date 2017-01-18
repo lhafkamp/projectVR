@@ -17,6 +17,8 @@ canvas {
   <a-assets>
     <video id="video" src="../assets/video/duif.mp4"
            autoplay muted loop crossorigin preload="auto"></video>
+    <audio id="voiceOverIntro" src="../assets/sound/vrvoice.mp3"
+            autoplay crossorigin preload="auto"></audio>
   </a-assets>
   <a-curvedimage data-ui="test" src="../assets/img/ui.png" radius="4" theta-length="360" height="12" scale=".3 .3 .3"></a-curvedimage>
   <a-videosphere data-test="sky" src="https://c2.staticflickr.com/4/3634/3383476447_976363aef3_b.jpg">
@@ -61,17 +63,23 @@ canvas {
       console.log(transcript);
   });
 
-  function goToLevel() {
-    document.querySelector('canvas').style.opacity = 0;
-    setTimeout(() => {
-      document.querySelector('canvas').style.opacity = 1;
-    }, 2000);
+  // intro voice over
+  const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
-    setTimeout(() => {
-      sky.setAttribute('src', '#video');
-      vid.play();
-      ui.removeChild(document.querySelector('[data-ui]'));
-    }, 1000);
+  function goToLevel() {
+    // only allow level transitions if the voice over is paused
+    if (voiceOverIntro.paused) {
+      document.querySelector('canvas').style.opacity = 0;
+      setTimeout(() => {
+        document.querySelector('canvas').style.opacity = 1;
+      }, 2000);
+
+      setTimeout(() => {
+        sky.setAttribute('src', '#video');
+        vid.play();
+        ui.removeChild(document.querySelector('[data-ui]'));
+      }, 1000);
+    }
   }
 
   recognition.addEventListener('end', recognition.start);
