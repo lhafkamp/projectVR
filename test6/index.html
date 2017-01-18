@@ -26,7 +26,7 @@
               autoplay crossorigin preload="auto"></audio>
     </a-assets>
 
-    <a-curvedimage data-ui="test" src="../assets/img/besteui.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".3 .3 .3"></a-curvedimage>
+    <a-curvedimage data-ui="curvedimage" src="../assets/img/besteui.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".3 .3 .3"></a-curvedimage>
 
     <a-videosphere data-element="videosphere" src="../assets/img/room.png">
       <a-root>
@@ -48,6 +48,7 @@
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const skyElem = document.querySelector('[data-element="videosphere"]');
+    const UIElem = document.querySelector('[data-ui="curvedimage"]');
     const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
     const recognition = new SpeechRecognition();
@@ -55,13 +56,23 @@
 
     recognition.addEventListener('result', e => {
       // console.log(e.results);
+
       const transcript = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
         .join('');
 
-        if (transcript.includes('level 3')) {
-          goToLevel(3);
+        if (transcript.includes('level 1')) {
+          goToLevel(1);
+
+          setTimeout(() => {
+            sky.setAttribute('src', '#video');
+            vid.play();
+            besteui.setAttribute('opacity', '0');
+          }, 1000);
+
+        } else if (transcript.includes('stop')) {
+          goToLevel(0);
         }
 
         console.log(transcript);
@@ -72,16 +83,25 @@
 
       if (voiceOverIntro.paused) {
         canvasElem.style.opacity = 0;
+        UIElem.setAttribute('opacity', '0');
+
         setTimeout(() => {
           canvasElem.style.opacity = 1;
         }, 2000);
 
         setTimeout(() => {
-          skyElem.setAttribute('src', `#video${level}`);
+          if(level === 0) {
+            skyElem.setAttribute('src', '../assets/img/besteui.png');
+            vid.pause();
+          } else {
+            skyElem.setAttribute('src', `#video${level}`);
 
-          const currentVideo = document.querySelector(`#video${level}`);
-          currentVideo.play();
-          currentVideo.currentTime = 0;
+            const currentVideo = document.querySelector(`#video${level}`);
+            currentVideo.play();
+            currentVideo.currentTime = 0;
+          }
+
+          UIElem.setAttribute('opacity', '1');
         }, 1000);
       }
     }
