@@ -15,7 +15,7 @@
 
 <body>
   <a-scene data-scene="binnen">
-    <a-assets> -->
+    <a-assets>
       <video id="video1" src="../assets/video/school.mp4"  lazy-load="chunk: 0; src:../assets/video/school.mp4; id: video1" autoplay muted loop crossorigin></video>
       <video id="video2" src="../assets/video/metro.mp4"   lazy-load="chunk: 1; src:../assets/video/school.mp4; id: video2" autoplay muted loop crossorigin></video>
       <video id="video3" src="../assets/video/cs.mp4"      lazy-load="chunk: 1; src:../assets/video/school.mp4; id: video3" autoplay muted loop crossorigin></video>
@@ -48,8 +48,7 @@
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const skyElem = document.querySelector('[data-element="videosphere"]');
-    const UIElem = document.querySelector('[data-ui]');
-    // const UIElem = document.querySelector('[data-ui="curvedimage"]');
+    const UIElem = document.querySelector('[data-ui="curvedimage"]');
     const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
     const recognition = new SpeechRecognition();
