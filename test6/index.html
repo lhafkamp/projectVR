@@ -26,11 +26,11 @@
               autoplay crossorigin preload="auto"></audio>
     </a-assets>
 
-    <a-curvedimage data-ui="curvedimage" src="../assets/img/besteuip2.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".3 .3 .3"></a-curvedimage>
+    <a-curvedimage data-ui="curvedimage" src="../assets/img/besteuip2.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".5 .5 .5"></a-curvedimage>
 
     <a-videosphere data-element="videosphere" src="../assets/img/roomp2.png">
       <a-root>
-        <a-entity geometry="primitive: sphere" material="shader: flat; src: url(../assets/img/room.png);" scale="1 1 1"></a-entity>
+        <a-entity geometry="primitive: sphere" material="shader: flat; src: url(../assets/img/roomp2.png);" scale="1 1 1"></a-entity>
       </a-root>
     </a-videosphere>
 
@@ -51,15 +51,22 @@
     const UIElem = document.querySelector('[data-ui="curvedimage"]');
     const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
+    let currentLevel = 0;
+
     const recognition = new SpeechRecognition();
     recognition.interimResults = true;
 
     function goToLevel(level) {
       const canvasElem = document.querySelector('canvas');
 
-      if (voiceOverIntro.paused) {
+      console.log('current level:', currentLevel);
+      console.log('target level:', level);
+
+      if (voiceOverIntro.paused && (currentLevel != level)) {
         canvasElem.style.opacity = 0;
         UIElem.setAttribute('opacity', '0');
+
+        currentLevel = level;
 
         setTimeout(() => {
           canvasElem.style.opacity = 1;
@@ -67,13 +74,15 @@
 
         setTimeout(() => {
           if(level === 0) {
-            skyElem.setAttribute('src', '../assets/img/room.png');
+            skyElem.setAttribute('src', '../assets/img/roomp2.png');
             UIElem.setAttribute('opacity', '1');
           } else {
             skyElem.setAttribute('src', `#video${level}`);
 
             const currentVideo = document.querySelector(`#video${level}`);
             currentVideo.play();
+            currentVideo.removeAttribute('muted');
+
             currentVideo.currentTime = 0;
           }
         }, 1000);
@@ -81,8 +90,6 @@
     }
 
     recognition.addEventListener('result', e => {
-      // console.log(e.results);
-
       const transcript = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
