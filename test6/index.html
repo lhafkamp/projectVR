@@ -51,36 +51,22 @@
     const UIElem = document.querySelector('[data-ui="curvedimage"]');
     const voiceOverIntro = document.querySelector('#voiceOverIntro');
 
+    let currentLevel = 0;
+
     const recognition = new SpeechRecognition();
     recognition.interimResults = true;
-
-
-    // Returns a function, that, as long as it continues to be invoked, will not
-    // be triggered. The function will be called after it stops being called for
-    // N milliseconds. If `immediate` is passed, trigger the function on the
-    // leading edge, instead of the trailing.
-    function debounce(func, wait, immediate) {
-      var timeout;
-      return function() {
-        var context = this, args = arguments;
-        var later = function() {
-          timeout = null;
-          if (!immediate) func.apply(context, args);
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-      };
-    };
-
 
     function goToLevel(level) {
       const canvasElem = document.querySelector('canvas');
 
-      if (voiceOverIntro.paused) {
+      console.log('current level:', currentLevel);
+      console.log('target level:', level);
+
+      if (voiceOverIntro.paused && (currentLevel != level)) {
         canvasElem.style.opacity = 0;
         UIElem.setAttribute('opacity', '0');
+        
+        currentLevel = level;
 
         setTimeout(() => {
           canvasElem.style.opacity = 1;
@@ -102,10 +88,7 @@
       }
     }
 
-
     recognition.addEventListener('result', e => {
-      // console.log(e.results);
-
       const transcript = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
