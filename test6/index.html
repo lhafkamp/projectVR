@@ -104,6 +104,7 @@
 
             const currentVideo = document.querySelector(`#video${level}`);
             currentVideo.play();
+            currentVideo.removeAttribute('muted');
             currentVideo.currentTime = 0;
           }
         }, 1000);
