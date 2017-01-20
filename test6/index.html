@@ -75,6 +75,34 @@
     };
 
 
+    function goToLevel(level) {
+      const canvasElem = document.querySelector('canvas');
+
+      if (voiceOverIntro.paused) {
+        canvasElem.style.opacity = 0;
+        UIElem.setAttribute('opacity', '0');
+
+        setTimeout(() => {
+          canvasElem.style.opacity = 1;
+        }, 2000);
+
+        setTimeout(() => {
+          if(level === 0) {
+            skyElem.setAttribute('src', '../assets/img/room.png');
+            UIElem.setAttribute('opacity', '1');
+          } else {
+            skyElem.setAttribute('src', `#video${level}`);
+
+            const currentVideo = document.querySelector(`#video${level}`);
+            currentVideo.play();
+            currentVideo.removeAttribute('muted');
+            currentVideo.currentTime = 0;
+          }
+        }, 1000);
+      }
+    }
+
+
     recognition.addEventListener('result', e => {
       // console.log(e.results);
 
@@ -104,33 +132,6 @@
 
         console.log(transcript);
     });
-
-    function goToLevel(level) {
-      const canvasElem = document.querySelector('canvas');
-
-      if (voiceOverIntro.paused) {
-        canvasElem.style.opacity = 0;
-        UIElem.setAttribute('opacity', '0');
-
-        setTimeout(() => {
-          canvasElem.style.opacity = 1;
-        }, 2000);
-
-        setTimeout(() => {
-          if(level === 0) {
-            skyElem.setAttribute('src', '../assets/img/room.png');
-            UIElem.setAttribute('opacity', '1');
-          } else {
-            skyElem.setAttribute('src', `#video${level}`);
-
-            const currentVideo = document.querySelector(`#video${level}`);
-            currentVideo.play();
-            currentVideo.removeAttribute('muted');
-            currentVideo.currentTime = 0;
-          }
-        }, 1000);
-      }
-    }
 
     recognition.addEventListener('end', recognition.start);
     recognition.start();
