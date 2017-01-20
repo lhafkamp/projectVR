@@ -22,8 +22,7 @@
       <video id="video4" src="../assets/video/csplein.mp4" lazy-load="chunk: 2; src:../assets/video/school.mp4; id: video4" autoplay muted loop crossorigin></video>
       <video id="video5" src="../assets/video/duif.mp4"    lazy-load="chunk: 2; src:../assets/video/school.mp4; id: video5" autoplay muted loop crossorigin></video>
 
-      <audio id="voiceOverIntro" src="../assets/sound/vrvoice.mp3"
-              autoplay crossorigin preload="auto"></audio>
+      <audio id="voiceOverIntro" src="../assets/sound/vrvoice.mp3" crossorigin preload="auto"></audio>
     </a-assets>
 
     <a-curvedimage data-ui="curvedimage" src="../assets/img/besteuip2.png" rotation="0 130 0" radius="4" theta-length="100" height="3" scale=".5 .5 .5"></a-curvedimage>
@@ -56,11 +55,12 @@
     const recognition = new SpeechRecognition();
     recognition.interimResults = true;
 
+    setTimeout(() => {
+      voiceOverIntro.play()
+    }, 5000);
+
     function goToLevel(level) {
       const canvasElem = document.querySelector('canvas');
-
-      console.log('current level:', currentLevel);
-      console.log('target level:', level);
 
       if (voiceOverIntro.paused && (currentLevel != level)) {
         canvasElem.style.opacity = 0;
